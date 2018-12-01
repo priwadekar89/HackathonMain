@@ -8,6 +8,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.hackathon.dao.RegistrationDAO;
 import com.hackathon.model.Address;
+import com.hackathon.model.Login;
 import com.hackathon.model.User;
 
 
@@ -16,6 +17,9 @@ public class UserController {
 	
 	@Autowired
 	RegistrationDAO rdao;
+	
+	@Autowired
+	Login login;
 	
 	
 	@RequestMapping("/Registration")
@@ -45,15 +49,15 @@ public class UserController {
 	
 	
 	@RequestMapping("/userLogin")
-	public ModelAndView userLogin(ModelAndView model, @ModelAttribute User user) {
+	public ModelAndView userLogin(ModelAndView model, @ModelAttribute Login login) {
 		
 
-		boolean valid = rdao.validateUser(user);
+		boolean valid = rdao.validateUser(login);
 	
 		if(valid) {
 		
 		
-			if(user.getGu_email().equals("admin123@gmail.com") && user.getGu_password().equals("1234")) {
+			if(login.getGu_email().equals("admin123@gmail.com")) {
 			
 				model.setViewName("AdminHome");
 				return model;

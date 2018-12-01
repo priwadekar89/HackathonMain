@@ -50,7 +50,7 @@ public class User {
 		return gu_password;
 	}
 	public void setGu_password(String gu_password) {
-		this.gu_password = gu_password;
+		this.gu_password = MD5.getMd5(gu_password);
 	}
 	
 	

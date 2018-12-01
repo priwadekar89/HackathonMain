@@ -64,7 +64,7 @@ public class ExamController {
 			
 			
 			for(String op : qnlist.get(count).getOpAns()) {
-				if(option.equals(op)) {
+				if(option.equals(op) && option.equals('Yes')) {
 					System.out.println("yay");
 				}
 			}

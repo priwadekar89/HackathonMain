@@ -44,6 +44,10 @@ xmlns:context="http://www.springframework.org/schema/context"
 	 <bean id="exceldao" class="com.hackathon.dao.ExcelDAO"
         autowire="byType"></bean>
 
+
+<bean id="login" class="com.hackathon.model.Login"
+        autowire="byType"></bean>
+
 	
 	
 <mvc:resources mapping="/resources/**" location="/resources/"  cache-period="31556926"/>
