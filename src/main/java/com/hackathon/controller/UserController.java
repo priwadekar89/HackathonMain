@@ -46,6 +46,7 @@ public class UserController {
 	
 	@RequestMapping("/userLogin")
 	public ModelAndView userLogin(ModelAndView model, @ModelAttribute User user) {
+		
 
 		boolean valid = rdao.validateUser(user);
 	

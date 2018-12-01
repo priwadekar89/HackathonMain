@@ -48,8 +48,7 @@ public class RegistrationDAO implements RegistrationDAOInterface {
 
 		String email= "select gu_email from gr7_users where gu_email='" + user.getGu_email() + "'";
 		String password= "select gu_password from gr7_users where gu_password='" + user.getGu_password() + "'";
-
-
+		
 		String e = jdbcTemplate.queryForObject(email, String.class);
 		System.out.println(e);
 
