@@ -50,7 +50,7 @@ public class AdminController {
 			} 
 			Connection conn = null;
 			try {
-				conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.100.198:1521/xe", "system", "Newuser123");
+				conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "db", "Newuser123");
 			} catch (SQLException e3) {
 
 				e3.printStackTrace();
@@ -66,7 +66,7 @@ public class AdminController {
 
 
 			// We should now load excel objects and loop through the worksheet data 
-			FileInputStream 	input_document = new FileInputStream(new File("C:\\Users\\AE103_PC19\\Desktop\\demo.xlsx"));
+			FileInputStream 	input_document = new FileInputStream(new File("C:\\Users\\dhbin\\Downloads\\demo.xlsx"));
 			// Load workbook 
 			XSSFWorkbook my_xls_workbook = new XSSFWorkbook(input_document);
 			/* Load worksheet */
