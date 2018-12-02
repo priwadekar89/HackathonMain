@@ -42,6 +42,7 @@ public class AdminController {
 	//Excel import ...
 		@RequestMapping("/upload")
 		public ModelAndView uploadExcel(HttpServletRequest req, HttpServletResponse res, ModelAndView model) throws IOException {
+			System.out.println("in admin controller");
 			try {
 				Class.forName ("oracle.jdbc.OracleDriver");
 			} catch (ClassNotFoundException e4) {
@@ -212,7 +213,7 @@ public class AdminController {
 		
 				e.printStackTrace();
 			}
-			model.setViewName("Practice");
+			model.setViewName("Practice1");
 			return model;
 
 		}
