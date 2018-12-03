@@ -1,48 +1,47 @@
 package com.hackathon.controller;
 
-
-
-
+//File and sql Related
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Iterator;
 
+
+
+//Servlet Related
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+
+
+//For importing excel file to database 
+import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+
+//Spring related
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.hackathon.dao.ExcelDAO;
+import com.hackathon.dao.QuestionsDAO;
 
 
 @Controller
 public class AdminController {
 	@Autowired
-	ExcelDAO excelDao;
+	QuestionsDAO qdao;
 
 	//Excel import ...
 		@RequestMapping("/upload")
 		public ModelAndView uploadExcel(HttpServletRequest req, HttpServletResponse res, ModelAndView model) throws IOException {
-			System.out.println("in admin controller");
 			try {
 				Class.forName ("oracle.jdbc.OracleDriver");
 			} catch (ClassNotFoundException e4) {
@@ -51,7 +50,7 @@ public class AdminController {
 			} 
 			Connection conn = null;
 			try {
-				conn = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:xe", "db", "Newuser123");
+				conn = DriverManager.getConnection("jdbc:oracle:thin:@192.168.100.198:1521/xe", "system", "Newuser123");
 			} catch (SQLException e3) {
 
 				e3.printStackTrace();
@@ -67,7 +66,7 @@ public class AdminController {
 
 
 			// We should now load excel objects and loop through the worksheet data 
-			FileInputStream 	input_document = new FileInputStream(new File("C:\\Users\\dhbin\\Downloads\\demo.xlsx"));
+			FileInputStream 	input_document = new FileInputStream(new File("C:\\Users\\AE103_PC19\\Desktop\\demo.xlsx"));
 			// Load workbook 
 			XSSFWorkbook my_xls_workbook = new XSSFWorkbook(input_document);
 			/* Load worksheet */
@@ -213,7 +212,7 @@ public class AdminController {
 		
 				e.printStackTrace();
 			}
-			model.setViewName("Practice1");
+			model.setViewName("AdminHome");
 			return model;
 
 		}
