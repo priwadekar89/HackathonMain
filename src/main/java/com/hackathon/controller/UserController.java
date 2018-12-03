@@ -1,5 +1,9 @@
 package com.hackathon.controller;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -49,14 +53,19 @@ public class UserController {
 	
 	
 	@RequestMapping("/userLogin")
-	public ModelAndView userLogin(ModelAndView model, @ModelAttribute Login login) {
+	public ModelAndView userLogin(HttpServletRequest req, HttpServletResponse res, ModelAndView model, @ModelAttribute Login login) {
 		
 
 		boolean valid = rdao.validateUser(login);
 	
 		if(valid) {
 		
-		
+			User u = rdao.getUser(login.getGu_email());
+			
+			HttpSession userSession = req.getSession(true);
+			userSession.setAttribute("user", u);
+			
+			//This part is only for redirection 
 			if(login.getGu_email().equals("admin123@gmail.com")) {
 			
 				model.setViewName("AdminHome");

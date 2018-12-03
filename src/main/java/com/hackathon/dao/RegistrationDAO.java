@@ -1,9 +1,11 @@
 package com.hackathon.dao;
 
+import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 
 import com.hackathon.model.Address;
 import com.hackathon.model.Login;
+import com.hackathon.model.Questions;
 import com.hackathon.model.User;
 
 public class RegistrationDAO implements RegistrationDAOInterface {
@@ -43,13 +45,23 @@ public class RegistrationDAO implements RegistrationDAOInterface {
 
 		return i;
 	}
+	
+	public User getUser(String email) {
+		
+		String selectUser = "select * from gr7_users where gu_email=?";
+		
+		User user = (User)getJdbcTemplate().queryForObject(selectUser, new Object[] { email }, new BeanPropertyRowMapper(User.class));
+		
+		return user;
+	
+	}
 
 	public boolean validateUser(Login login ) {
 
 
 		String email= "select gu_email from gr7_users where gu_email='" + login.getGu_email() + "'";
 		String password= "select gu_password from gr7_users where gu_password='" + login.getGu_password() + "'";
-		
+
 		String e = jdbcTemplate.queryForObject(email, String.class);
 		System.out.println(e);
 
@@ -70,6 +82,6 @@ public class RegistrationDAO implements RegistrationDAOInterface {
 
 
 
-	
-	}
+
+}
 

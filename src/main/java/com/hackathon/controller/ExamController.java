@@ -11,22 +11,36 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.hackathon.dao.ExamDAO;
 import com.hackathon.dao.QuestionsDAO;
 import com.hackathon.model.Questions;
+import com.hackathon.model.User;
 
 @Controller
 public class ExamController {
 
 	@Autowired
 	QuestionsDAO qdao;
+	
+	@Autowired
+	ExamDAO edao;
 
 	@RequestMapping("/ExamInstructions")
-	public ModelAndView redirectToInstructionPage() {
-		return new ModelAndView("ExamInstructions");
+	public ModelAndView redirectToInstructionPage(HttpServletRequest req, HttpServletResponse res) {
+		
+		HttpSession userSession = req.getSession(false);
+		if(null != userSession) {
+			return new ModelAndView("ExamInstructions");
+		}
+		else {
+			return new ModelAndView("UserLogin");
+		}
+
 	}
 
 	@RequestMapping("/startExam")
 	public ModelAndView startExam(HttpServletRequest req, HttpServletResponse res, ModelAndView model) {
+
 
 
 		List<Questions> qnlist = qdao.getAllQuestions();
@@ -51,7 +65,10 @@ public class ExamController {
 	@RequestMapping("/nextQn")
 	public ModelAndView nextQn(HttpServletRequest req, HttpServletResponse res, ModelAndView model) {
 
+		
+		
 		HttpSession ses = req.getSession(false);
+		System.out.println("examSes" + ses);
 		int count = (Integer)ses.getAttribute("counter");
 		int listcount = (Integer)ses.getAttribute("listcount");
 		int scoreCounter = (Integer)ses.getAttribute("scoreCounter");
@@ -84,7 +101,20 @@ public class ExamController {
 			
 		}
 		else {
-
+			
+			//Code for putting score in database for the current logged in user..
+			HttpSession userSession = req.getSession(false);
+			System.out.println("userSession" + userSession);
+			User u = (User)userSession.getAttribute("user");
+			
+			String passOrFail = "fail";
+			if(scoreCounter < 2) {
+				passOrFail = "Pass";
+			}
+			
+			int i = edao.setScore(u, scoreCounter, passOrFail);
+			
+			//Code for sending score to the result page
 			ses.setAttribute("scoreCounter", scoreCounter);
 			model.addObject(scoreCounter);
 			model.setViewName("ScorePage");

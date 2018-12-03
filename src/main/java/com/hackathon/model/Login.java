@@ -3,6 +3,8 @@ package com.hackathon.model;
 public class Login {
 	private String gu_email;
 	
+	private String gu_password;
+	
 	public String getGu_email() {
 		return gu_email;
 	}
@@ -15,5 +17,5 @@ public class Login {
 	public void setGu_password(String gu_password) {
 		this.gu_password =  MD5.getMd5(gu_password);
 	}
-	private String gu_password;
+	
 }
