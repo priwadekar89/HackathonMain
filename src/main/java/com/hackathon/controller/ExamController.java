@@ -76,9 +76,7 @@ public class ExamController {
 		String option = req.getParameter("op");
 		listcount++;
 		if(option.equals("yes")) {
-			
 			scoreCounter++;
-			System.out.println("yay bro tera ans bohot sahi hai bc!!");
 		}
 		
 		System.out.println("list count: " + listcount);
@@ -107,15 +105,15 @@ public class ExamController {
 			System.out.println("userSession" + userSession);
 			User u = (User)userSession.getAttribute("user");
 			
-			String passOrFail = "fail";
-			if(scoreCounter < 2) {
+			String passOrFail = "Fail";
+			if(scoreCounter >= 2) {
 				passOrFail = "Pass";
 			}
 			
 			int i = edao.setScore(u, scoreCounter, passOrFail);
 			
 			//Code for sending score to the result page
-			ses.setAttribute("scoreCounter", scoreCounter);
+			//ses.setAttribute("scoreCounter", scoreCounter);
 			model.addObject(scoreCounter);
 			model.setViewName("ScorePage");
 			return model;

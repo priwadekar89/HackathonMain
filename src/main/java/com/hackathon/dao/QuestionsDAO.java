@@ -35,7 +35,7 @@ public class QuestionsDAO implements QuestionsDAOInterface {
 	public Questions findQuestionById(int gq_id) {
 		 
 		
-		String sql = "SELECT * FROM CUSTOMER WHERE CUST_ID = ?";
+		String sql = "SELECT * FROM gr7_questions WHERE gq_id = ?";
 	 
 		Questions question = (Questions)getJdbcTemplate().queryForObject(sql, new Object[] { gq_id }, new BeanPropertyRowMapper(Questions.class));
 		
